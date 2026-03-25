@@ -1,0 +1,52 @@
+SmartNet AI — Decision Tree Rules
+==================================================
+
+|--- packet_size <= 299.50
+|   |--- dest_port <= 2293.50
+|   |   |--- class: 2
+|   |--- dest_port >  2293.50
+|   |   |--- class: 0
+|--- packet_size >  299.50
+|   |--- byte_count <= 10013755.50
+|   |   |--- latency <= 79.92
+|   |   |   |--- jitter <= 30.02
+|   |   |   |   |--- burst_rate <= 797.50
+|   |   |   |   |   |--- dest_port <= 1988.00
+|   |   |   |   |   |   |--- byte_count <= 4990077.50
+|   |   |   |   |   |   |   |--- truncated branch of depth 6
+|   |   |   |   |   |   |--- byte_count >  4990077.50
+|   |   |   |   |   |   |   |--- truncated branch of depth 3
+|   |   |   |   |   |--- dest_port >  1988.00
+|   |   |   |   |   |   |--- class: 1
+|   |   |   |   |--- burst_rate >  797.50
+|   |   |   |   |   |--- dest_port <= 261.50
+|   |   |   |   |   |   |--- class: 1
+|   |   |   |   |   |--- dest_port >  261.50
+|   |   |   |   |   |   |--- class: 1
+|   |   |   |--- jitter >  30.02
+|   |   |   |   |--- jitter <= 52.30
+|   |   |   |   |   |--- flow_duration <= 184.26
+|   |   |   |   |   |   |--- jitter <= 49.84
+|   |   |   |   |   |   |   |--- class: 2
+|   |   |   |   |   |   |--- jitter >  49.84
+|   |   |   |   |   |   |   |--- class: 2
+|   |   |   |   |   |--- flow_duration >  184.26
+|   |   |   |   |   |   |--- class: 3
+|   |   |   |   |--- jitter >  52.30
+|   |   |   |   |   |--- class: 3
+|   |   |--- latency >  79.92
+|   |   |   |--- latency <= 201.10
+|   |   |   |   |--- retransmission_rate <= 8.04
+|   |   |   |   |   |--- byte_count <= 5096720.50
+|   |   |   |   |   |   |--- jitter <= 49.93
+|   |   |   |   |   |   |   |--- truncated branch of depth 6
+|   |   |   |   |   |   |--- jitter >  49.93
+|   |   |   |   |   |   |   |--- class: 3
+|   |   |   |   |   |--- byte_count >  5096720.50
+|   |   |   |   |   |   |--- class: 3
+|   |   |   |   |--- retransmission_rate >  8.04
+|   |   |   |   |   |--- class: 3
+|   |   |   |--- latency >  201.10
+|   |   |   |   |--- class: 3
+|   |--- byte_count >  10013755.50
+|   |   |--- class: 3

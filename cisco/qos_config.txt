@@ -1,0 +1,58 @@
+! ============================================================
+! SmartNet AI — QoS Configuration for Cisco Router
+! Generated from Decision Tree classification rules
+! Apply to edge router (R1) outbound interface
+! ============================================================
+
+! --- Access Control Lists ---
+access-list 101 permit udp any any range 16384 32767
+access-list 102 permit tcp any any eq 80
+access-list 102 permit tcp any any eq 443
+access-list 103 permit udp any any eq 53
+access-list 103 permit tcp any any eq 25
+access-list 104 permit tcp any any eq 21
+
+! --- Class Maps ---
+class-map match-any CRITICAL_TRAFFIC
+ match access-group 101
+ match dscp ef
+
+class-map match-any HIGH_TRAFFIC
+ match access-group 102
+ match dscp af31
+
+class-map match-any MEDIUM_TRAFFIC
+ match access-group 103
+ match dscp af21
+
+class-map match-any LOW_TRAFFIC
+ match access-group 104
+ match dscp default
+
+! --- Policy Map (SmartNet AI Allocation) ---
+policy-map SMARTNET_AI_POLICY
+ class CRITICAL_TRAFFIC
+  priority percent 40
+  set dscp ef
+ class HIGH_TRAFFIC
+  bandwidth percent 30
+  set dscp af31
+ class MEDIUM_TRAFFIC
+  bandwidth percent 20
+  set dscp af21
+ class LOW_TRAFFIC
+  bandwidth percent 10
+  set dscp default
+ class class-default
+  fair-queue
+
+! --- Apply to Sub-Interfaces (Router-on-a-Stick) ---
+interface GigabitEthernet0/0.10
+ encapsulation dot1Q 10
+ service-policy output SMARTNET_AI_POLICY
+interface GigabitEthernet0/0.20
+ encapsulation dot1Q 20
+ service-policy output SMARTNET_AI_POLICY
+interface GigabitEthernet0/0.30
+ encapsulation dot1Q 30
+ service-policy output SMARTNET_AI_POLICY
